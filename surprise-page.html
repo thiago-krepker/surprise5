@@ -206,7 +206,7 @@
         .player-controls .play-button {
             font-size: 3.5rem; /* Botão de play maior */
             color: #fff; /* Branco para o botão de play */
-            transition: color 0.2s ease; /* Mantém apenas a transição de cor */
+            transition: color 0.2s ease;
         }
 
         .player-controls .play-button:hover {
@@ -380,7 +380,7 @@
         .carousel-slide img {
             width: 100%;
             height: 100%; /* Definido 100% para ocupar toda a altura disponível */
-            object-fit: cover; /* Permite que a imagem preencha a altura, cortando a largura se necessário */
+            object-fit: contain; /* Alterado para 'contain' para mostrar a imagem inteira */
             border-radius: 10px;
         }
 
