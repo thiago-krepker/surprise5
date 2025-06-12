@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surpresa, Meu Amor!</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Fontes românticas e legíveis -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Lora:wght@400;700&family=Inter:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome para os ícones do player e carrossel -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #000; /* Fundo preto */
+            font-family: 'Dancing Script', cursive; /* Aplicando a nova fonte romântica principal */
+            overflow-x: hidden; /* Evita barra de rolagem horizontal */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px; /* Adiciona um padding geral para o conteúdo */
+            position: relative;
+        }
+
+        .main-content {
+            width: 100%;
+            max-width: 900px; /* Largura máxima para o conteúdo principal */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* Reduzido o espaçamento geral entre os blocos */
+            z-index: 10; /* Para ficar acima de qualquer elemento de fundo */
+        }
+
+        .heading {
+            color: #FF0000; /* Vermelho puro */
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px; /* Diminuído o espaço após o título */
+            animation: fadeIn 2s ease-out;
+            font-family: 'Dancing Script', cursive; /* Garante que o título use a nova fonte */
+        }
+
+        .initials-text {
+            color: #FF0000; /* Vermelho puro */
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px; /* Diminuído o espaço após as iniciais */
+            animation: fadeIn 1.5s ease-out;
+            font-family: 'Dancing Script', cursive; /* Garante que as iniciais usem a nova fonte */
+        }
+
+        .section-title { /* Estilo para títulos de seção como "Nossos melhores momentos" e "Nosso tempo juntos" */
+            color: #FF0000; /* Vermelho puro */
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeIn 1.5s ease-out;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* Estilos para o reprodutor Spotify-like */
+        .spotify-player-container {
+            width: 100%;
+            max-width: 400px; /* Limite de largura para o player, conforme a imagem */
+            background-color: #000; /* Fundo preto para combinar com o corpo */
+            border-radius: 10px; /* Bordas um pouco menos arredondadas como na imagem */
+            padding: 20px; /* Ajuste do padding */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px; /* Espaçamento entre os blocos internos */
+            box-shadow: none; /* Removendo a sombra */
+            animation: fadeIn 2s ease-out;
+        }
+
+        .album-art-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%; /* Para manter a proporção 1:1 */
+            background-color: #282828; /* Cor de fundo da capa */
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,.5); /* Sombra da capa */
+            margin-bottom: 20px; /* Espaçamento abaixo da capa */
+        }
+
+        .album-art-slot {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #777; /* Cor para o texto de placeholder */
+            font-family: 'Inter', sans-serif;
+            font-size: 1.5rem;
+            overflow: hidden;
+        }
+
+        .album-art-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Garante que a imagem preencha o slot */
+            border-radius: 10px;
+        }
+
+        .song-info {
+            text-align: center;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .song-title {
+            color: #fff;
+            font-size: 1.6rem; /* Ajustado para a imagem */
+            font-weight: 700;
+            margin-bottom: 5px;
+            font-family: 'Inter', sans-serif; /* Mantido Inter para legibilidade */
+        }
+
+        .artist-name {
+            color: #B3B3B3; /* Cinza claro */
+            font-size: 1.1rem; /* Ajustado para a imagem */
+            font-family: 'Inter', sans-serif; /* Mantido Inter para legibilidade */
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 4px; /* Mais fina como na imagem */
+            background-color: #404040; /* Fundo da barra de progresso */
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 40%; /* Exemplo: similar ao tempo da imagem (1:06 de 3:33) */
+            background-color: #1DB954; /* Verde do Spotify para o progresso */
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .progress-bar-handle {
+            width: 12px;
+            height: 12px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            right: -6px; /* Metade da largura para centralizar */
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+            display: none; /* Escondido por padrão, aparece ao interagir ou ao simular */
+        }
+
+        .progress-bar-container:hover .progress-bar-handle {
+            display: block; /* Simula a aparição do handle ao passar o mouse */
+        }
+
+
+        .timestamps {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 8px;
+            color: #B3B3B3;
+            font-size: 0.85rem; /* Ajuste para a imagem */
+            font-family: 'Inter', sans-serif;
+        }
+
+        .player-controls {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            margin-top: 25px; /* Espaçamento abaixo da barra */
+        }
+
+        .player-controls button {
+            background: none;
+            border: none;
+            color: #B3B3B3; /* Cor padrão dos ícones */
+            font-size: 1.6rem;
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.2s ease;
+        }
+
+        .player-controls button:hover {
+            color: #fff; /* Hover effect */
+        }
+
+        .player-controls .play-button {
+            font-size: 3.5rem; /* Botão de play maior */
+            color: #fff; /* Branco para o botão de play */
+        }
+
+        .player-controls .play-button:hover {
+            color: #1DB954; /* Verde do Spotify no hover */
+        }
+
+        /* Botão de verificação */
+        .verified-icon {
+            color: #1DB954; /* Verde do Spotify */
+            font-size: 1.1rem;
+            margin-left: 8px;
+        }
+
+        /* Estilos para o contador de tempo (novo layout) */
+        .countdown-timer {
+            display: flex; /* Usando flexbox para empilhar as linhas */
+            flex-direction: column;
+            align-items: center;
+            gap: 10px; /* Espaçamento entre as linhas */
+            color: #FFF; /* Texto branco */
+            font-family: 'Inter', sans-serif; /* Fonte legível para o contador */
+            text-align: center;
+            margin-top: 20px; /* Espaçamento acima do contador */
+            padding: 10px;
+            width: 100%;
+            max-width: 400px; /* Largura para o container */
+        }
+
+        .countdown-timer .countdown-row {
+            display: flex; /* Flexbox para as unidades dentro da linha */
+            justify-content: space-around; /* Distribui as unidades uniformemente */
+            width: 100%;
+            gap: 5px; /* Espaçamento entre as unidades na horizontal */
+        }
+
+        .countdown-timer .time-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1; /* Para que ocupem o mesmo espaço na linha */
+            font-size: 0.9rem; /* Tamanho da fonte para as unidades */
+            font-weight: 400;
+            line-height: 1.2;
+            padding: 5px;
+            border-radius: 5px;
+            background-color: transparent; /* Fundo transparente */
+        }
+
+        .countdown-timer .time-unit .countdown-number {
+            font-size: 1.8rem; /* Tamanho maior para os números */
+            font-weight: 700;
+            color: #FF0000; /* Vermelho vibrante para os números */
+            font-family: 'Dancing Script', cursive; /* Fonte romântica para os números */
+            display: block; /* Garante que o número fique em sua própria linha */
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Transição para a animação */
+        }
+
+        /* Animações para os números do contador */
+        .countdown-number.animate-out {
+            transform: translateY(10px); /* Move para baixo */
+            opacity: 0; /* Desaparece */
+        }
+
+        .countdown-number.animate-in {
+            transform: translateY(0); /* Volta para a posição original */
+            opacity: 1; /* Aparece */
+        }
+
+
+        .polaroid-grid {
+            display: flex;
+            flex-wrap: wrap; /* Permite que as polaroids quebrem a linha */
+            justify-content: center;
+            gap: 30px; /* Espaçamento entre as polaroids */
+            width: 100%;
+            margin-top: 40px; /* Espaçamento entre player/contador e polaroids */
+        }
+
+        .polaroid {
+            background-color: #fff;
+            padding: 15px 15px 30px 15px; /* Mais espaço para a legenda */
+            border-radius: 8px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+            transform: rotate(calc(var(--rotation) * 1deg)); /* Rotação aleatória */
+            transition: transform 0.3s ease-in-out;
+            max-width: 280px; /* Tamanho máximo para cada polaroid */
+            width: 100%; /* Ocupa a largura total disponível */
+            text-align: center;
+            position: relative;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .polaroid:hover {
+            transform: scale(1.05) rotate(0deg); /* Efeito ao passar o mouse */
+            z-index: 15;
+            box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: auto; /* Ajusta a altura da imagem para manter sua proporção original */
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .polaroid-caption {
+            font-size: 1rem;
+            color: #333;
+            font-weight: 600;
+            margin-top: 10px;
+            font-family: 'Inter', sans-serif; /* Mantém Inter para melhor legibilidade da legenda */
+        }
+
+        .love-message {
+            color: #FFFFFF; /* Mudado para branco */
+            font-size: 1.5rem;
+            text-align: center;
+            margin-top: 40px;
+            line-height: 1.6;
+            animation: fadeIn 2s ease-out;
+            padding: 0 15px; /* Padding para garantir que o texto não toque as bordas em mobile */
+            font-family: 'Dancing Script', cursive; /* Aplicando a fonte "Dancing Script" para o texto final */
+        }
+
+        .signature-text { /* Novo estilo para a assinatura */
+            color: #FFFFFF; /* Branco */
+            font-size: 1.2rem;
+            text-align: center;
+            margin-top: 20px; /* Espaçamento após a mensagem de amor */
+            font-family: 'Dancing Script', cursive; /* Mesma fonte da mensagem de amor */
+        }
+
+        /* Estilos para a nova seção de geração de mensagens de amor */
+        .love-note-generator {
+            margin-top: 60px; /* Espaço maior para separar da assinatura */
+            padding: 25px;
+            background-color: #1A1A1A; /* Fundo escuro sutil */
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3); /* Sombra vermelha sutil */
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 2s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .love-note-generator h3 {
+            color: #FF0000; /* Vermelho puro */
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .love-note-generator textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #282828; /* Fundo do textarea */
+            color: #fff;
+            border: 1px solid #404040;
+            resize: vertical; /* Permite redimensionar verticalmente */
+            min-height: 100px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            line-height: 1.5;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .love-note-generator textarea:focus {
+            outline: none;
+            border-color: #FF0000;
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.3);
+        }
+
+        .love-note-generator button {
+            background-color: #FF0000; /* Vermelho */
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 12px 25px;
+            border-radius: 30px; /* Botão mais arredondado */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .love-note-generator button:hover {
+            background-color: #CC0000; /* Vermelho mais escuro no hover */
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.6);
+        }
+
+        .love-note-generator #loadingSpinner {
+            color: #FF0000;
+            font-size: 1rem;
+            margin-top: 15px;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .love-note-generator #loadingSpinner::before {
+            content: '';
+            border: 3px solid rgba(255, 0, 0, 0.3);
+            border-top: 3px solid #FF0000;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .love-note-generator #generatedLoveNote {
+            background-color: #282828;
+            color: #FFF;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            text-align: left;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* Estilos do Carrossel */
+        .carousel-container {
+            width: 100%;
+            max-width: 600px; /* Largura máxima para o carrossel */
+            margin-top: 40px; /* Espaçamento após as polaroids */
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0,0,0,.5);
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out; /* Suavidade na transição do carrossel */
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            box-sizing: border-box; /* Garante que padding e border não afetem a largura */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #282828; /* Fundo para os slides */
+            height: 350px; /* Altura fixa para as fotos do carrossel */
+            overflow: hidden;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Garante que a imagem preencha o slide */
+            border-radius: 10px;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+            z-index: 2; /* Para que os botões fiquem acima das imagens */
+        }
+
+        .carousel-button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .carousel-button.prev {
+            left: 10px;
+        }
+
+        .carousel-button.next {
+            right: 10px;
+        }
+
+
+        /* Animações gerais */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .heading {
+                font-size: 2rem;
+            }
+            .initials-text, .section-title {
+                font-size: 1.8rem;
+            }
+            .spotify-player-container {
+                padding: 15px;
+                max-width: 90%;
+            }
+            .countdown-timer {
+                max-width: 90%;
+            }
+            .countdown-timer .time-unit {
+                font-size: 0.9rem;
+            }
+            .countdown-timer .time-unit span {
+                font-size: 1.8rem;
+            }
+            .album-art-slot {
+                width: 200px;
+                height: 200px;
+            }
+            .song-title {
+                font-size: 1.4rem;
+            }
+            .artist-name {
+                font-size: 1rem;
+            }
+            .player-controls button {
+                font-size: 1.4rem;
+            }
+            .player-controls .play-button {
+                font-size: 3rem;
+            }
+            .polaroid {
+                max-width: 90%;
+                padding: 10px 10px 20px 10px;
+            }
+            .polaroid img {
+                height: auto; /* Mantendo o ajuste automático para mobile */
+            }
+            .polaroid-caption {
+                font-size: 0.9rem;
+            }
+            .love-message {
+                font-size: 1.2rem;
+            }
+            .signature-text {
+                font-size: 1rem;
+            }
+            .love-note-generator {
+                padding: 15px;
+                margin-top: 40px;
+            }
+            .love-note-generator h3 {
+                font-size: 1.7rem;
+            }
+            .love-note-generator textarea {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            .love-note-generator button {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+            .love-note-generator #generatedLoveNote {
+                font-size: 1rem;
+            }
+            .carousel-container {
+                max-width: 90%;
+                height: 280px;
+            }
+            .carousel-slide {
+                height: 280px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .heading {
+                font-size: 1.5rem;
+            }
+            .initials-text, .section-title {
+                font-size: 1.5rem;
+            }
+            .spotify-player-container {
+                padding: 10px;
+                max-width: 100%;
+            }
+            .countdown-timer {
+                gap: 10px 3px;
+                max-width: 100%;
+            }
+            .countdown-timer .time-unit {
+                font-size: 0.8rem;
+            }
+            .countdown-timer .time-unit span {
+                font-size: 1.5rem;
+            }
+            .album-art-slot {
+                width: 150px;
+                height: 150px;
+            }
+            .song-title {
+                font-size: 1.2rem;
+            }
+            .artist-name {
+                font-size: 0.8rem;
+            }
+            .player-controls button {
+                font-size: 1.2rem;
+            }
+            .player-controls .play-button {
+                font-size: 2.5rem;
+            }
+            .polaroid-grid {
+                gap: 15px;
+            }
+            .love-message {
+                font-size: 1rem;
+            }
+            .signature-text {
+                font-size: 0.9rem;
+            }
+            .love-note-generator {
+                padding: 10px;
+                margin-top: 30px;
+            }
+            .love-note-generator h3 {
+                font-size: 1.5rem;
+            }
+            .love-note-generator textarea {
+                min-height: 80px;
+            }
+            .love-note-generator button {
+                font-size: 0.9rem;
+                padding: 8px 15px;
+            }
+            .love-note-generator #generatedLoveNote {
+                font-size: 0.9rem;
+            }
+            .carousel-container {
+                max-width: 100%;
+                height: 220px; /* Ajuste a altura para telas muito pequenas */
+            }
+            .carousel-slide {
+                height: 220px;
+            }
+            .carousel-button {
+                font-size: 1.2rem;
+                padding: 8px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <h1 class="heading">feliz dia dos namorados meu amor</h1>
+
+        <div class="initials-text">T + N</div>
+
+        <!-- Slot para o reprodutor Spotify-like -->
+        <div class="spotify-player-container">
+            <div class="album-art-wrapper">
+                <div class="album-art-slot">
+                    <!-- A imagem da capa que você mandou foi colocada aqui -->
+                    <img src="WhatsApp_Image_2025-06-09_at_22.55.54.jpeg" alt="Capa da Música LOVE.">
+                </div>
+            </div>
+
+            <div class="song-info">
+                <p class="song-title">LOVE. FEAT. ZACARI.</p>
+                <p class="artist-name">Kendrick Lamar, Zacari <i class="fas fa-check-circle verified-icon"></i></p>
+            </div>
+
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill">
+                    <div class="progress-bar-handle"></div>
+                </div>
+            </div>
+            <div class="timestamps">
+                <span class="current-time">1:06</span>
+                <span class="total-time">-2:27</span>
+            </div>
+
+            <div class="player-controls">
+                <button aria-label="Shuffle"><i class="fas fa-random"></i></button>
+                <button aria-label="Previous"><i class="fas fa-step-backward"></i></button>
+                <button class="play-button" aria-label="Play"><i class="fas fa-play-circle"></i></button>
+                <button aria-label="Next"><i class="fas fa-step-forward"></i></button>
+                <button aria-label="Repeat"><i class="fas fa-redo-alt"></i></button>
+            </div>
+        </div>
+
+        <!-- Título para o calendário -->
+        <h2 class="section-title">Nosso tempo juntos</h2>
+
+        <!-- Contador de tempo em tempo real, com novo layout 3x2 -->
+        <div class="countdown-timer" id="countdown-timer">
+            <div class="countdown-row">
+                <div class="time-unit"><span id="years" class="countdown-number">00</span> anos</div>
+                <div class="time-unit"><span id="months" class="countdown-number">00</span> meses</div>
+                <div class="time-unit"><span id="days" class="countdown-number">00</span> dias</div>
+            </div>
+            <div class="countdown-row">
+                <div class="time-unit"><span id="hours" class="countdown-number">00</span> horas</div>
+                <div class="time-unit"><span id="minutes" class="countdown-number">00</span> minutos</div>
+                <div class="time-unit"><span id="seconds" class="countdown-number">00</span> segundos</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Nossos melhores momentos</h2>
+
+        <div class="polaroid-grid">
+            <div class="polaroid" style="--rotation: -5;">
+                <img src="https://placehold.co/250x200/FFB6C1/000000?text=Momento+1" alt="Momento Romântico 1">
+                <p class="polaroid-caption">Lembranças do nosso primeiro encontro.</p>
+            </div>
+            <div class="polaroid" style="--rotation: 8;">
+                <img src="https://i.imgur.com/51wYhKc_d.webp?maxwidth=1520&fidelity=grand" alt="Momento Romântico 2">
+                <p class="polaroid-caption">Nossa viagem inesquecível juntos!</p>
+            </div>
+            <div class="polaroid" style="--rotation: -3;">
+                <img src="https://placehold.co/250x200/FFB6C1/000000?text=Momento+3" alt="Momento Romântico 3">
+                <p class="polaroid-caption">Sempre rindo com você.</p>
+            </div>
+        </div>
+
+        <!-- Carrossel de fotos -->
+        <div class="carousel-container">
+            <div class="carousel-track" id="carouselTrack">
+                <div class="carousel-slide"><img src="https://placehold.co/600x350/FFB6C1/000000?text=Carrossel+Foto+1" alt="Foto Carrossel 1"></div>
+                <div class="carousel-slide"><img src="https://placehold.co/600x350/FFB6C1/000000?text=Carrossel+Foto+2" alt="Foto Carrossel 2"></div>
+                <div class="carousel-slide"><img src="https://placehold.co/600x350/FFB6C1/000000?text=Carrossel+Foto+3" alt="Foto Carrossel 3"></div>
+                <div class="carousel-slide"><img src="https://placehold.co/600x350/FFB6C1/000000?text=Carrossel+Foto+4" alt="Foto Carrossel 4"></div>
+            </div>
+            <button class="carousel-button prev" id="carouselPrevBtn"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-button next" id="carouselNextBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
+        <p class="love-message">
+            Amor, quero que você saiba o quanto você é importante para mim e que eu valorizo muito a nossa relação.
+            Estou amando muito estar ao seu lado e ter momentos especiais com você, quero que continue assim e que possamos
+            cada vez mais evoluir o nosso relacionamento. Te amo muito ❤️
+        </p>
+
+        <p class="signature-text">
+            Made by Thiago for Nathalia.
+        </p>
+
+        <!-- Nova Seção para o Gerador de Mensagens de Amor Personalizadas com IA (Gemini) -->
+        <div class="love-note-generator">
+            <h3>✨ Crie sua Mensagem de Amor Personalizada ✨</h3>
+            <textarea id="loveNoteInput" placeholder="Conte-me sobre o que torna o relacionamento de vocês especial, uma memória querida ou qualidades que você mais ama na Nathalia..."></textarea>
+            <button id="generateLoveNoteBtn">Gerar Mensagem ✨</button>
+            <div id="loadingSpinner" class="hidden">Gerando...</div>
+            <div id="generatedLoveNote" class="hidden">
+                <!-- A mensagem gerada pelo Gemini aparecerá aqui -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Carrossel de Fotos
+        const carouselTrack = document.getElementById('carouselTrack');
+        const carouselSlides = document.querySelectorAll('.carousel-slide');
+        const carouselPrevBtn = document.getElementById('carouselPrevBtn');
+        const carouselNextBtn = document.getElementById('carouselNextBtn');
+        let currentSlide = 0;
+        const totalSlides = carouselSlides.length;
+
+        function updateCarousel() {
+            if (carouselSlides.length > 0) { // Certifica-se de que há slides antes de calcular
+                const slideWidth = carouselSlides[0].clientWidth;
+                carouselTrack.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+            }
+        }
+
+        carouselPrevBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        });
+
+        carouselNextBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        });
+
+        // Atualiza o carrossel ao carregar e redimensionar a janela
+        window.addEventListener('resize', updateCarousel);
+        // Chame updateCarousel após um pequeno atraso para garantir que o layout esteja pronto
+        setTimeout(updateCarousel, 100);
+
+
+        // Função para calcular e atualizar o contador de tempo
+        // Guarda os valores anteriores para a animação
+        let previousYears = '00', previousMonths = '00', previousDays = '00';
+        let previousHours = '00', previousMinutes = '00', previousSeconds = '00';
+
+        function updateCountdown() {
+            // A data de início do relacionamento (09/02/2025)
+            const startDate = new Date('2025-02-09T00:00:00');
+            const now = new Date();
+
+            let diffSeconds = Math.floor((now.getTime() - startDate.getTime()) / 1000);
+
+            // Se a data de início ainda não chegou, exibe 00 em tudo
+            if (diffSeconds < 0) {
+                diffSeconds = 0;
+            }
+
+            const seconds = diffSeconds % 60;
+            const minutes = Math.floor(diffSeconds / 60) % 60;
+            const hours = Math.floor(diffSeconds / (60 * 60)) % 24;
+            const days = Math.floor(diffSeconds / (60 * 60 * 24));
+
+            const averageDaysInMonth = 30.44; // Média de dias em um mês
+            const averageDaysInYear = 365.25; // Média de dias em um ano (considerando anos bissextos)
+
+            let years = Math.floor(days / averageDaysInYear);
+            let remainingDaysAfterYears = days % averageDaysInYear;
+            let months = Math.floor(remainingDaysAfterYears / averageDaysInMonth);
+            let remainingDaysAfterMonths = Math.floor(remainingDaysAfterYears % averageDaysInMonth);
+
+
+            // Formatar os números para ter sempre dois dígitos (ex: 05, 12)
+            const formatNumber = (num) => num.toString().padStart(2, '0');
+
+            const units = [
+                { id: 'years', value: formatNumber(years), prev: previousYears },
+                { id: 'months', value: formatNumber(months), prev: previousMonths },
+                { id: 'days', value: formatNumber(remainingDaysAfterMonths), prev: previousDays },
+                { id: 'hours', value: formatNumber(hours), prev: previousHours },
+                { id: 'minutes', value: formatNumber(minutes), prev: previousMinutes },
+                { id: 'seconds', value: formatNumber(seconds), prev: previousSeconds }
+            ];
+
+            units.forEach(unit => {
+                const element = document.getElementById(unit.id);
+                if (element && element.textContent !== unit.value) {
+                    // Adiciona classe de animação para saída
+                    element.classList.add('animate-out');
+                    setTimeout(() => {
+                        element.textContent = unit.value;
+                        element.classList.remove('animate-out');
+                        element.classList.add('animate-in'); // Adiciona classe de animação para entrada
+                        // Remove a classe de entrada após a transição para que possa ser reativada
+                        setTimeout(() => {
+                            element.classList.remove('animate-in');
+                        }, 300); // Duração da transição CSS
+                    }, 150); // Metade da duração da transição para trocar o texto
+                }
+            });
+
+            // Atualiza os valores anteriores
+            previousYears = units[0].value;
+            previousMonths = units[1].value;
+            previousDays = units[2].value;
+            previousHours = units[3].value;
+            previousMinutes = units[4].value;
+            previousSeconds = units[5].value;
+        }
+
+        // Atualiza o contador a cada segundo
+        setInterval(updateCountdown, 1000);
+
+        // Chama a função uma vez ao carregar para exibir o contador imediatamente
+        window.onload = updateCountdown;
+
+
+        // Lógica para o Gerador de Mensagens de Amor com Gemini API
+        const loveNoteInput = document.getElementById('loveNoteInput');
+        const generateLoveNoteBtn = document.getElementById('generateLoveNoteBtn');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const generatedLoveNote = document.getElementById('generatedLoveNote');
+
+        generateLoveNoteBtn.addEventListener('click', async () => {
+            const userInput = loveNoteInput.value.trim();
+
+            if (!userInput) {
+                generatedLoveNote.textContent = 'Por favor, escreva algo para gerar a mensagem.';
+                generatedLoveNote.classList.remove('hidden');
+                return;
+            }
+
+            loadingSpinner.classList.remove('hidden');
+            generatedLoveNote.classList.add('hidden'); // Esconde a mensagem anterior, se houver
+
+            try {
+                // Monta o histórico de chat para a requisição da API Gemini
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: `Escreva uma mensagem de amor romântica e personalizada de Thiago para Nathalia, focando nos seguintes detalhes: ${userInput}. Seja carinhoso(a) e sincero(a).` }] });
+
+                const payload = { contents: chatHistory };
+                const apiKey = ""; // A chave da API será fornecida pelo ambiente Canvas em tempo de execução
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    generatedLoveNote.textContent = text;
+                    generatedLoveNote.classList.remove('hidden');
+                } else {
+                    generatedLoveNote.textContent = 'Desculpe, não foi possível gerar a mensagem. Tente novamente.';
+                    generatedLoveNote.classList.remove('hidden');
+                    console.error('Estrutura de resposta inesperada da API Gemini:', result);
+                }
+
+            } catch (error) {
+                generatedLoveNote.textContent = 'Ocorreu um erro ao gerar a mensagem. Verifique sua conexão ou tente mais tarde.';
+                generatedLoveNote.classList.remove('hidden');
+                console.error('Erro ao chamar a API Gemini:', error);
+            } finally {
+                loadingSpinner.classList.add('hidden');
+            }
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pegue a Sua Flor</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Importando as fontes Dancing Script (para títulos), Inter (padrão) e Merriweather (para "hun?") -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000; /* Fundo preto */
+            font-family: 'Inter', sans-serif;
+            overflow: hidden; /* Previne barras de rolagem ao mover a flor */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+
+        .flower-text {
+            color: #FF0000; /* Vermelho puro para o texto */
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            position: absolute;
+            top: 15%; /* Um pouco mais para cima */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            animation: fadeIn 1.5s ease-out;
+            font-family: 'Dancing Script', cursive; /* Aplicando a fonte romântica */
+        }
+
+        .hun-text { /* Estilo para o texto "hun?" */
+            color: #FF0000; /* Vermelho puro */
+            font-size: 3rem; /* Aumentado um pouco para destaque */
+            font-weight: 700;
+            text-align: center;
+            position: absolute;
+            top: 15%; /* Mesma posição da frase da flor */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            animation: fadeIn 1.5s ease-out;
+            font-family: 'Merriweather', serif; /* Nova fonte para "hun?" */
+            display: none; /* Escondido inicialmente */
+        }
+
+        .flower {
+            position: absolute;
+            width: 120px; /* Tamanho da área da flor */
+            height: 120px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out, transform 0.2s ease-out; /* Transição mais rápida */
+            animation: bounce 2s infinite, fadeIn 1.5s ease-out;
+
+            /* Estilo para o emoji da flor */
+            font-size: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flower:hover {
+            transform: scale(1.1); /* Animação ao passar o mouse */
+        }
+
+        .flower-disappear {
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.5s ease-in-out;
+        }
+
+        .surprise-button {
+            background-color: #FF0000; /* Vermelho vibrante */
+            color: #fff;
+            font-size: 2rem;
+            font-weight: bold;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 15px; /* Cantos arredondados */
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.9);
+            display: none; /* Escondido inicialmente */
+            animation: pulse 1.5s infinite, fadeIn 2s ease-out;
+            position: absolute; /* Centralizado */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1) translate(-50%, -50%); box-shadow: 0 0 30px rgba(255, 0, 0, 0.9); }
+            50% { transform: scale(1.05) translate(-50%, -50%); box-shadow: 0 0 50px rgba(255, 0, 0, 1); }
+            100% { transform: scale(1) translate(-50%, -50%); box-shadow: 0 0 30px rgba(255, 0, 0, 0.9); }
+        }
+
+        /* Corações flutuantes no fundo */
+        .heart-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none; /* Garante que os corações não atrapalhem cliques */
+            overflow: hidden; /* Para que os corações desapareçam ao sair da tela */
+        }
+
+        .heart {
+            position: absolute;
+            background-color: #FF1493; /* Rosa choque */
+            transform: rotate(-45deg);
+            animation: floatHeart 10s infinite ease-in-out;
+            opacity: 0; /* Começa invisível */
+            z-index: 1;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: inherit;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -50%;
+            left: 0;
+        }
+
+        .heart::after {
+            top: 0;
+            left: 50%;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(-45deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            80% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-20vh) rotate(-45deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .flower-text, .hun-text {
+                font-size: 1.8rem;
+                top: 10%;
+            }
+            .flower {
+                width: 100px;
+                height: 100px;
+                font-size: 60px; /* Ajuste o tamanho do emoji para telas menores */
+            }
+            .surprise-button {
+                font-size: 1.5rem;
+                padding: 15px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="flower-text" id="flowerText">pegue a sua flor</div>
+    <div class="hun-text" id="hunText">hun?</div> <!-- Novo elemento para o texto "hun?" -->
+
+    <!-- Emoji da rosa vermelha -->
+    <div class="flower" id="flower">🌹</div>
+
+    <button class="surprise-button" id="surpriseButton">SURPRESA!!</button>
+
+    <!-- Container para os corações flutuantes -->
+    <div class="heart-container" id="heartContainer"></div>
+
+    <script>
+        const flower = document.getElementById('flower');
+        const surpriseButton = document.getElementById('surpriseButton');
+        const flowerText = document.getElementById('flowerText'); // Obter o elemento da frase da flor
+        const hunText = document.getElementById('hunText'); // Obter o elemento do texto "hun?"
+        const heartContainer = document.getElementById('heartContainer');
+        let clickCount = 0;
+        const maxClicks = 5;
+
+        // Função para gerar uma posição aleatória para a flor
+        function getRandomPosition() {
+            const currentX = flower.offsetLeft;
+            const currentY = flower.offsetTop;
+            const flowerWidth = flower.offsetWidth;
+            const flowerHeight = flower.offsetHeight;
+
+            // Define uma distância mínima para a flor se mover (50% da menor dimensão da tela)
+            // Aumentado para garantir um movimento mais significativo como um "jogo"
+            const minMoveDistance = Math.min(window.innerWidth, window.innerHeight) * 0.50;
+
+            let newX, newY;
+            let isValidPosition = false;
+            let attempts = 0;
+            const maxAttempts = 100; // Limite de tentativas para evitar loop infinito
+
+            // Posição e dimensões dos elementos a serem evitados
+            const flowerTextRect = flowerText.getBoundingClientRect();
+            const surpriseButtonRect = surpriseButton.getBoundingClientRect();
+            // Adicionando um buffer para evitar que a flor fique muito perto dos textos/botão
+            const buffer = 20;
+
+            while (!isValidPosition && attempts < maxAttempts) {
+                newX = Math.random() * (window.innerWidth - flowerWidth);
+                newY = Math.random() * (window.innerHeight - flowerHeight);
+
+                // Calcular a distância da nova posição em relação à posição atual
+                const distanceX = Math.abs(newX - currentX);
+                const distanceY = Math.abs(newY - currentY);
+                const isFarEnough = (distanceX > minMoveDistance || distanceY > minMoveDistance);
+
+                // Criar um retângulo para a nova posição da flor
+                const proposedFlowerRect = {
+                    left: newX,
+                    top: newY,
+                    right: newX + flowerWidth,
+                    bottom: newY + flowerHeight
+                };
+
+                // Função auxiliar para verificar colisão com um retângulo e um buffer
+                const checkCollision = (rect1, rect2, buffer) => {
+                    return !(
+                        rect1.right + buffer < rect2.left ||
+                        rect1.left > rect2.right + buffer ||
+                        rect1.bottom + buffer < rect2.top ||
+                        rect1.top > rect2.bottom + buffer
+                    );
+                };
+
+                // Verificar colisão com o texto "pegue a sua flor"
+                const collideWithFlowerText = checkCollision(proposedFlowerRect, flowerTextRect, buffer);
+
+                // Verificar colisão com o botão "SURPRESA!!" (se visível)
+                let collideWithSurpriseButton = false;
+                // Apenas verifica colisão com o botão surpresa se ele estiver visível
+                if (surpriseButton.style.display === 'block') {
+                    collideWithSurpriseButton = checkCollision(proposedFlowerRect, surpriseButtonRect, buffer);
+                }
+
+                // A posição é válida se estiver longe o suficiente E não colidir com o texto ou botão
+                if (isFarEnough && !collideWithFlowerText && !collideWithSurpriseButton) {
+                    isValidPosition = true;
+                }
+                attempts++;
+            }
+
+            // Se não encontrar uma posição válida após muitas tentativas,
+            // faça um fallback para uma posição aleatória simples (pode haver pequena colisão, mas é um último recurso)
+            if (!isValidPosition) {
+                console.warn("Não foi possível encontrar uma posição válida para a flor. Usando fallback.");
+                newX = Math.random() * (window.innerWidth - flowerWidth);
+                newY = Math.random() * (window.innerHeight - flowerHeight);
+            }
+
+            return { x: newX, y: newY };
+        }
+
+
+        // Define a posição inicial da flor no centro
+        function setInitialFlowerPosition() {
+            const initialX = (window.innerWidth - flower.offsetWidth) / 2;
+            const initialY = (window.innerHeight - flower.offsetHeight) / 2;
+            flower.style.left = `${initialX}px`;
+            flower.style.top = `${initialY}px`;
+        }
+
+        // Chama a função para definir a posição inicial da flor quando a página carrega
+        window.onload = () => {
+            setInitialFlowerPosition();
+            // Gera corações continuamente, mas com menos frequência (a cada 1.5 segundos)
+            setInterval(createHeart, 1500); // Frequência diminuída para menos corações
+        };
+        window.onresize = setInitialFlowerPosition; // Ajusta a posição ao redimensionar a janela
+
+        flower.addEventListener('click', () => {
+            clickCount++;
+
+            if (clickCount <= maxClicks) {
+                const newPos = getRandomPosition();
+                flower.style.left = `${newPos.x}px`;
+                flower.style.top = `${newPos.y}px`;
+            }
+
+            if (clickCount === maxClicks) {
+                // Remove a flor após a quinta vez
+                flower.classList.add('flower-disappear');
+                setTimeout(() => {
+                    flower.style.display = 'none'; // Esconde completamente após a transição
+                }, 500); // Tempo da transição
+
+                // Esconde a frase "pegue a sua flor"
+                flowerText.style.display = 'none';
+                // Mostra o texto "hun?"
+                hunText.style.display = 'block';
+
+                // Mostra o botão de surpresa
+                surpriseButton.style.display = 'block';
+            }
+        });
+
+        // Event listener para o botão SURPRESA!! que agora redireciona
+        surpriseButton.addEventListener('click', () => {
+            window.location.href = 'surprise-page.html'; // Redireciona para a nova página
+        });
+
+        // Função para criar e animar um coração
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.width = `${Math.random() * 20 + 10}px`; // Tamanho aleatório
+            heart.style.height = heart.style.width;
+            heart.style.left = `${Math.random() * 100}vw`; // Posição horizontal aleatória
+            heart.style.animationDuration = `${Math.random() * 6 + 5}s`; // Duração da animação aleatória
+            heart.style.animationDelay = `${Math.random() * 2}s`; // Atraso da animação aleatório
+            heartContainer.appendChild(heart);
+
+            // Remove o coração após a animação para otimização
+            heart.addEventListener('animationend', () => {
+                heart.remove();
+            });
+        }
+    </script>
+</body>
+</html>
