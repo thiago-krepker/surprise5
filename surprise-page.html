@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <!-- Fontes românticas e legíveis -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Lora:wght@400;700&family=Inter:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome para os ícones do player e carrossel -->
+    <!-- Font Awesome para os ícones (apenas se ainda precisar de outros ícones na página, para o carrossel não será mais usado) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -35,7 +35,7 @@
 
         .heading {
             color: #FF0000; /* Vermelho puro */
-            font-size: 3rem;
+            font-size: 4rem;
             font-weight: 700;
             text-align: center;
             margin-bottom: 10px; /* Diminuído o espaço após o título */
@@ -66,7 +66,7 @@
         /* Estilos para o reprodutor Spotify-like */
         .spotify-player-container {
             width: 100%;
-            max-width: 400px; /* Limite de largura para o player, conforme a imagem */
+            /* max-width será definido em media queries para controle responsivo */
             background-color: #000; /* Fundo preto para combinar com o corpo */
             border-radius: 10px; /* Bordas um pouco menos arredondadas como na imagem */
             padding: 20px; /* Ajuste do padding */
@@ -76,6 +76,12 @@
             gap: 20px; /* Espaçamento entre os blocos internos */
             box-shadow: none; /* Removendo a sombra */
             animation: fadeIn 2s ease-out;
+        }
+        /* Limita a largura do player em telas maiores */
+        @media (min-width: 769px) {
+            .spotify-player-container {
+                max-width: 400px;
+            }
         }
 
         .album-art-wrapper {
@@ -133,7 +139,7 @@
 
         .progress-bar-container {
             width: 100%;
-            height: 4px; /* Mais fina como na imagem */
+            height: 4px; /* Más fina como na imagem */
             background-color: #404040; /* Fundo da barra de progresso */
             border-radius: 2px;
             position: relative;
@@ -333,171 +339,90 @@
         }
 
         /* Estilos para a nova seção de geração de mensagens de amor */
-        .love-note-generator {
-            margin-top: 60px; /* Espaço maior para separar da assinatura */
-            padding: 25px;
-            background-color: #1A1A1A; /* Fundo escuro sutil */
-            border-radius: 15px;
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3); /* Sombra vermelha sutil */
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
-            animation: fadeIn 2s ease-out;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        /* REMOVED .love-note-generator { ... } */
 
-        .love-note-generator h3 {
-            color: #FF0000; /* Vermelho puro */
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            font-family: 'Dancing Script', cursive;
-        }
+        /* REMOVED .love-note-generator h3 { ... } */
 
-        .love-note-generator textarea {
-            width: 100%;
-            padding: 15px;
-            border-radius: 10px;
-            background-color: #282828; /* Fundo do textarea */
-            color: #fff;
-            border: 1px solid #404040;
-            resize: vertical; /* Permite redimensionar verticalmente */
-            min-height: 100px;
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            line-height: 1.5;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
+        /* REMOVED .love-note-generator textarea { ... } */
 
-        .love-note-generator textarea:focus {
-            outline: none;
-            border-color: #FF0000;
-            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.3);
-        }
+        /* REMOVED .love-note-generator textarea:focus { ... } */
 
-        .love-note-generator button {
-            background-color: #FF0000; /* Vermelho */
-            color: #fff;
-            font-size: 1.2rem;
-            font-weight: bold;
-            padding: 12px 25px;
-            border-radius: 30px; /* Botão mais arredondado */
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        /* REMOVED .love-note-generator button { ... } */
 
-        .love-note-generator button:hover {
-            background-color: #CC0000; /* Vermelho mais escuro no hover */
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.6);
-        }
+        /* REMOVED .love-note-generator button:hover { ... } */
 
-        .love-note-generator #loadingSpinner {
-            color: #FF0000;
-            font-size: 1rem;
-            margin-top: 15px;
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        /* REMOVED .love-note-generator #loadingSpinner { ... } */
 
-        .love-note-generator #loadingSpinner::before {
-            content: '';
-            border: 3px solid rgba(255, 0, 0, 0.3);
-            border-top: 3px solid #FF0000;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-        }
+        /* REMOVED .love-note-generator #loadingSpinner::before { ... } */
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        /* REMOVED .love-note-generator #generatedLoveNote { ... } */
 
-        .love-note-generator #generatedLoveNote {
-            background-color: #282828;
-            color: #FFF;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 25px;
-            text-align: left;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
-            font-family: 'Dancing Script', cursive;
-        }
 
-        /* Estilos do Carrossel */
+        /* Estilos do Carrossel MODERNIZADO */
         .carousel-container {
             width: 100%;
-            max-width: 600px; /* Largura máxima para o carrossel */
+            max-width: 600px; /* Largura máxima para o carrossel em telas maiores */
             margin-top: 40px; /* Espaçamento após as polaroids */
-            position: relative;
-            overflow: hidden;
-            border-radius: 10px;
-            box-shadow: 0 8px 24px rgba(0,0,0,.5);
+            position: relative; /* Necessário para o posicionamento do track e slides internos */
+            overflow: hidden; /* Garante que as imagens que saem do slide fiquem escondidas */
+            border-radius: 15px; /* Mais arredondado */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7); /* Sombra mais forte */
+            padding-bottom: 66.66%; /* PROPORÇÃO: 3:2 (altura / largura) para torná-lo mais "fino" */
+            height: 0; /* Reseta a altura para usar padding-bottom para a proporção */
+            background-color: #1A1A1A; /* Fundo escuro para slides vazios */
         }
 
         .carousel-track {
             display: flex;
+            position: absolute; /* Permite que o track ocupe 100% do container com padding-bottom */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             transition: transform 0.5s ease-in-out; /* Suavidade na transição do carrossel */
         }
 
         .carousel-slide {
-            min-width: 100%;
-            box-sizing: border-box; /* Garante que padding e border não afetem a largura */
+            min-width: 100%; /* Cada slide ocupa 100% da largura do carrossel */
+            height: 100%;
+            box-sizing: border-box;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #282828; /* Fundo para os slides */
-            height: 350px; /* Altura fixa para as fotos do carrossel */
-            overflow: hidden;
+            overflow: hidden; /* Esconde qualquer parte da imagem que exceda o slide */
         }
 
         .carousel-slide img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Garante que a imagem preencha o slide */
-            border-radius: 10px;
+            object-fit: cover; /* Garante que a imagem preencha o slide sem distorcer, cortando se necessário */
+            border-radius: 10px; /* Arredondamento nas bordas da imagem */
         }
 
-        .carousel-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: #fff;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-            font-size: 1.5rem;
+        /* Estilos para os indicadores (círculos) MOVIDOS PARA FORA DO CONTAINER DO CARROSSEL */
+        .carousel-pagination {
+            display: flex;
+            justify-content: center; /* Centraliza os pontos */
+            gap: 10px; /* Espaçamento entre os círculos */
+            margin-top: 20px; /* Espaço entre o carrossel e os pontos */
+        }
+
+        .pagination-dot {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.4); /* Cor padrão dos círculos (cinza transparente) */
             border-radius: 50%;
-            transition: background-color 0.3s ease;
-            z-index: 2; /* Para que os botões fiquem acima das imagens */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        .carousel-button:hover {
-            background-color: rgba(0, 0, 0, 0.8);
+        .pagination-dot.active {
+            background-color: #FF0000; /* Vermelho vibrante para o círculo ativo */
+            transform: scale(1.2); /* Aumenta um pouco o círculo ativo */
         }
 
-        .carousel-button.prev {
-            left: 10px;
-        }
-
-        .carousel-button.next {
-            right: 10px;
+        .pagination-dot:hover {
+            background-color: rgba(255, 255, 255, 0.7); /* Mais claro no hover */
         }
 
 
@@ -505,6 +430,64 @@
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
+        }
+
+        /* Corações flutuantes no fundo */
+        .heart-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none; /* Garante que os corações não atrapalhem cliques */
+            overflow: hidden; /* Para que os corações desapareçam ao sair da tela */
+            z-index: 1; /* Garante que esteja no fundo */
+        }
+
+        .heart {
+            position: absolute;
+            background-color: #FF1493; /* Rosa choque */
+            transform: rotate(-45deg);
+            animation: floatHeart 10s infinite ease-in-out;
+            opacity: 0; /* Começa invisível */
+            z-index: 1;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: inherit;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -50%;
+            left: 0;
+        }
+
+        .heart::after {
+            top: 0;
+            left: 50%;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(-45deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            80% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-20vh) rotate(-45deg) scale(1.2);
+                opacity: 0;
+            }
         }
 
         /* Responsive adjustments */
@@ -517,7 +500,7 @@
             }
             .spotify-player-container {
                 padding: 15px;
-                max-width: 90%;
+                width: 100%; /* Garante que ocupe a largura total disponível */
             }
             .countdown-timer {
                 max-width: 90%;
@@ -529,8 +512,9 @@
                 font-size: 1.8rem;
             }
             .album-art-slot {
-                width: 200px;
-                height: 200px;
+                width: 100%;
+                height: auto;
+                padding-bottom: 100%;
             }
             .song-title {
                 font-size: 1.4rem;
@@ -549,7 +533,7 @@
                 padding: 10px 10px 20px 10px;
             }
             .polaroid img {
-                height: auto; /* Mantendo o ajuste automático para mobile */
+                height: auto;
             }
             .polaroid-caption {
                 font-size: 0.9rem;
@@ -560,30 +544,17 @@
             .signature-text {
                 font-size: 1rem;
             }
-            .love-note-generator {
-                padding: 15px;
-                margin-top: 40px;
-            }
-            .love-note-generator h3 {
-                font-size: 1.7rem;
-            }
-            .love-note-generator textarea {
-                padding: 10px;
-                font-size: 0.9rem;
-            }
-            .love-note-generator button {
-                font-size: 1rem;
-                padding: 10px 20px;
-            }
-            .love-note-generator #generatedLoveNote {
-                font-size: 1rem;
-            }
+            /* REMOVED .love-note-generator media queries */
             .carousel-container {
-                max-width: 90%;
-                height: 280px;
+                max-width: 90%; /* Ajusta para 90% da largura em telas médias */
+                padding-bottom: 75%; /* PROPORÇÃO: 4:3 para tablets e celulares maiores */
             }
             .carousel-slide {
-                height: 280px;
+                height: 100%;
+            }
+            .pagination-dot {
+                width: 10px;
+                height: 10px;
             }
         }
 
@@ -596,7 +567,7 @@
             }
             .spotify-player-container {
                 padding: 10px;
-                max-width: 100%;
+                width: 100%;
             }
             .countdown-timer {
                 gap: 10px 3px;
@@ -609,8 +580,8 @@
                 font-size: 1.5rem;
             }
             .album-art-slot {
-                width: 150px;
-                height: 150px;
+                width: 100%;
+                padding-bottom: 100%;
             }
             .song-title {
                 font-size: 1.2rem;
@@ -633,40 +604,27 @@
             .signature-text {
                 font-size: 0.9rem;
             }
-            .love-note-generator {
-                padding: 10px;
-                margin-top: 30px;
-            }
-            .love-note-generator h3 {
-                font-size: 1.5rem;
-            }
-            .love-note-generator textarea {
-                min-height: 80px;
-            }
-            .love-note-generator button {
-                font-size: 0.9rem;
-                padding: 8px 15px;
-            }
-            .love-note-generator #generatedLoveNote {
-                font-size: 0.9rem;
-            }
+            /* REMOVED .love-note-generator media queries */
             .carousel-container {
                 max-width: 100%;
-                height: 220px; /* Ajuste a altura para telas muito pequenas */
+                padding-bottom: 85%; /* PROPORÇÃO: um pouco mais "quadrado" para celulares menores */
             }
             .carousel-slide {
-                height: 220px;
+                height: 100%;
             }
-            .carousel-button {
-                font-size: 1.2rem;
-                padding: 8px 12px;
+            .pagination-dot {
+                width: 8px;
+                height: 8px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Container para os corações flutuantes -->
+    <div class="heart-container" id="heartContainer"></div>
+
     <div class="main-content">
-        <h1 class="heading">feliz dia dos namorados meu amor</h1>
+        <h1 class="heading">Feliz dia dos namorados meu amor</h1>
 
         <div class="initials-text">T + N</div>
 
@@ -674,8 +632,8 @@
         <div class="spotify-player-container">
             <div class="album-art-wrapper">
                 <div class="album-art-slot">
-                    <!-- A imagem da capa que você mandou foi colocada aqui -->
-                    <img src="WhatsApp_Image_2025-06-09_at_22.55.54.jpeg" alt="Capa da Música LOVE.">
+                    <!-- A imagem da capa do álbum foi atualizada com o link fornecido -->
+                    <img src="https://i.imgur.com/FBgJkXT.jpeg" alt="Capa da Música LOVE.">
                 </div>
             </div>
 
@@ -704,7 +662,7 @@
         </div>
 
         <!-- Título para o calendário -->
-        <h2 class="section-title">Nosso tempo juntos</h2>
+        <h2 class="section-title">Tempo juntos</h2>
 
         <!-- Contador de tempo em tempo real, com novo layout 3x2 -->
         <div class="countdown-timer" id="countdown-timer">
@@ -720,34 +678,38 @@
             </div>
         </div>
 
-        <h2 class="section-title">Nossos melhores momentos</h2>
+        <h2 class="section-title">Nossos momentos registrados</h2>
 
         <div class="polaroid-grid">
             <div class="polaroid" style="--rotation: -5;">
-                <img src="https://placehold.co/250x200/FFB6C1/000000?text=Momento+1" alt="Momento Romântico 1">
-                <p class="polaroid-caption">Lembranças do nosso primeiro encontro.</p>
+                <!-- Primeira polaroid atualizada -->
+                <img src="https://i.imgur.com/xm0nNqO.jpeg" alt="Momento Romântico 1">
+                <p class="polaroid-caption">Esse dia foi divertido!!</p>
             </div>
             <div class="polaroid" style="--rotation: 8;">
-                <img src="https://i.imgur.com/51wYhKc_d.webp?maxwidth=1520&fidelity=grand" alt="Momento Romântico 2">
+                <!-- Segunda polaroid atualizada -->
+                <img src="https://i.imgur.com/xz3kDyc_d.webp?maxwidth=1520&fidelity=grand" alt="Momento Romântico 2">
                 <p class="polaroid-caption">Nossa viagem inesquecível juntos!</p>
             </div>
             <div class="polaroid" style="--rotation: -3;">
-                <img src="https://placehold.co/250x200/FFB6C1/000000?text=Momento+3" alt="Momento Romântico 3">
+                <!-- Terceira polaroid atualizada -->
+                <img src="https://i.imgur.com/N8oiCNS_d.webp?maxwidth=1520&fidelity=grand" alt="Momento Romântico 3">
                 <p class="polaroid-caption">Sempre rindo com você.</p>
             </div>
         </div>
 
-        <!-- Carrossel de fotos -->
-        <div class="carousel-container">
+        <!-- Carrossel de fotos (modernizado) -->
+        <div class="carousel-container" id="carouselContainer">
             <div class="carousel-track" id="carouselTrack">
-                <div class="carousel-slide"><img src="https://placehold.co/600x350/FFB6C1/000000?text=Carrossel+Foto+1" alt="Foto Carrossel 1"></div>
-                <div class="carousel-slide"><img src="https://placehold.co/600x350/FFB6C1/000000?text=Carrossel+Foto+2" alt="Foto Carrossel 2"></div>
-                <div class="carousel-slide"><img src="https://placehold.co/600x350/FFB6C1/000000?text=Carrossel+Foto+3" alt="Foto Carrossel 3"></div>
-                <div class="carousel-slide"><img src="https://placehold.co/600x350/FFB6C1/000000?text=Carrossel+Foto+4" alt="Foto Carrossel 4"></div>
+                <!-- Imagens do carrossel atualizadas com os links fornecidos -->
+                <div class="carousel-slide"><img src="https://i.imgur.com/9DkG1C6.jpeg" alt="Foto Carrossel 1"></div>
+                <div class="carousel-slide"><img src="https://i.imgur.com/MaRB5Lk.jpeg" alt="Foto Carrossel 2"></div>
+                <div class="carousel-slide"><img src="https://i.imgur.com/4GC1E2o.jpeg" alt="Foto Carrossel 3"></div>
+                <div class="carousel-slide"><img src="https://i.imgur.com/51wYhKc.jpeg" alt="Foto Carrossel 4"></div>
             </div>
-            <button class="carousel-button prev" id="carouselPrevBtn"><i class="fas fa-chevron-left"></i></button>
-            <button class="carousel-button next" id="carouselNextBtn"><i class="fas fa-chevron-right"></i></button>
         </div>
+        <!-- Indicadores de paginação (círculos) -->
+        <div class="carousel-pagination" id="carouselPagination"></div>
 
         <p class="love-message">
             Amor, quero que você saiba o quanto você é importante para mim e que eu valorizo muito a nossa relação.
@@ -759,49 +721,96 @@
             Made by Thiago for Nathalia.
         </p>
 
-        <!-- Nova Seção para o Gerador de Mensagens de Amor Personalizadas com IA (Gemini) -->
-        <div class="love-note-generator">
-            <h3>✨ Crie sua Mensagem de Amor Personalizada ✨</h3>
-            <textarea id="loveNoteInput" placeholder="Conte-me sobre o que torna o relacionamento de vocês especial, uma memória querida ou qualidades que você mais ama na Nathalia..."></textarea>
-            <button id="generateLoveNoteBtn">Gerar Mensagem ✨</button>
-            <div id="loadingSpinner" class="hidden">Gerando...</div>
-            <div id="generatedLoveNote" class="hidden">
-                <!-- A mensagem gerada pelo Gemini aparecerá aqui -->
-            </div>
-        </div>
     </div>
 
     <script>
-        // Carrossel de Fotos
+        // Carrossel de Fotos Modernizado
+        const carouselContainer = document.getElementById('carouselContainer');
         const carouselTrack = document.getElementById('carouselTrack');
         const carouselSlides = document.querySelectorAll('.carousel-slide');
-        const carouselPrevBtn = document.getElementById('carouselPrevBtn');
-        const carouselNextBtn = document.getElementById('carouselNextBtn');
+        const carouselPagination = document.getElementById('carouselPagination');
         let currentSlide = 0;
         const totalSlides = carouselSlides.length;
 
-        function updateCarousel() {
-            if (carouselSlides.length > 0) { // Certifica-se de que há slides antes de calcular
-                const slideWidth = carouselSlides[0].clientWidth;
-                carouselTrack.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+        // Variáveis para funcionalidade de swipe
+        let startX = 0;
+        let endX = 0;
+        const swipeThreshold = 50; // Distância mínima do swipe para mudar de slide (em pixels)
+
+        // Função para criar e atualizar os pontos de paginação
+        function createPaginationDots() {
+            carouselPagination.innerHTML = ''; // Limpa os pontos existentes
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('pagination-dot');
+                if (i === currentSlide) {
+                    dot.classList.add('active');
+                }
+                dot.addEventListener('click', () => {
+                    currentSlide = i;
+                    updateCarousel();
+                });
+                carouselPagination.appendChild(dot);
             }
         }
 
-        carouselPrevBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        // Função para atualizar a exibição do carrossel e os pontos de paginação
+        function updateCarousel() {
+            if (carouselSlides.length === 0) return; // Evita erros se não houver slides
+
+            const slideWidth = carouselSlides[0].clientWidth;
+            carouselTrack.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+
+            // Atualiza o estado ativo dos pontos
+            const dots = document.querySelectorAll('.pagination-dot');
+            dots.forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        // Eventos de toque para swipe
+        carouselContainer.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            // Opcional: Impedir rolagem vertical da página enquanto o usuário tenta rolar horizontalmente no carrossel
+            // e.preventDefault(); // Comentar ou remover esta linha se causar problemas de rolagem da página
+        });
+
+        carouselContainer.addEventListener('touchmove', (e) => {
+            endX = e.touches[0].clientX;
+            // Opcional: Adicionar um efeito de arrasto visual enquanto o usuário desliza
+            // carouselTrack.style.transform = `translateX(${-currentSlide * carouselSlides[0].clientWidth + (endX - startX)}px)`;
+        });
+
+        carouselContainer.addEventListener('touchend', () => {
+            const diffX = endX - startX;
+
+            if (diffX > swipeThreshold) { // Swipe para a direita
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            } else if (diffX < -swipeThreshold) { // Swipe para a esquerda
+                currentSlide = (currentSlide + 1) % totalSlides;
+            }
+
+            // Reseta as variáveis de toque
+            startX = 0;
+            endX = 0;
+
             updateCarousel();
         });
 
-        carouselNextBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            updateCarousel();
+        // Eventos de clique para navegação por teclado (para acessibilidade, embora não seja o foco principal do "swipe")
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                updateCarousel();
+            } else if (e.key === 'ArrowRight') {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateCarousel();
+            }
         });
-
-        // Atualiza o carrossel ao carregar e redimensionar a janela
-        window.addEventListener('resize', updateCarousel);
-        // Chame updateCarousel após um pequeno atraso para garantir que o layout esteja pronto
-        setTimeout(updateCarousel, 100);
-
 
         // Função para calcular e atualizar o contador de tempo
         // Guarda os valores anteriores para a animação
@@ -872,69 +881,35 @@
             previousSeconds = units[5].value;
         }
 
-        // Atualiza o contador a cada segundo
-        setInterval(updateCountdown, 1000);
+        // Função para criar e animar um coração
+        function createHeart() {
+            const heartContainer = document.getElementById('heartContainer');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.width = `${Math.random() * 20 + 10}px`; // Tamanho aleatório
+            heart.style.height = heart.style.width;
+            heart.style.left = `${Math.random() * 100}vw`; // Posição horizontal aleatória
+            heart.style.animationDuration = `${Math.random() * 6 + 5}s`; // Duração da animação aleatória
+            heart.style.animationDelay = `${Math.random() * 2}s`; // Atraso da animação aleatório
+            heartContainer.appendChild(heart);
 
-        // Chama a função uma vez ao carregar para exibir o contador imediatamente
-        window.onload = updateCountdown;
+            // Remove o coração após a animação para otimização
+            heart.addEventListener('animationend', () => {
+                heart.remove();
+            });
+        }
 
-
-        // Lógica para o Gerador de Mensagens de Amor com Gemini API
-        const loveNoteInput = document.getElementById('loveNoteInput');
-        const generateLoveNoteBtn = document.getElementById('generateLoveNoteBtn');
-        const loadingSpinner = document.getElementById('loadingSpinner');
-        const generatedLoveNote = document.getElementById('generatedLoveNote');
-
-        generateLoveNoteBtn.addEventListener('click', async () => {
-            const userInput = loveNoteInput.value.trim();
-
-            if (!userInput) {
-                generatedLoveNote.textContent = 'Por favor, escreva algo para gerar a mensagem.';
-                generatedLoveNote.classList.remove('hidden');
-                return;
-            }
-
-            loadingSpinner.classList.remove('hidden');
-            generatedLoveNote.classList.add('hidden'); // Esconde a mensagem anterior, se houver
-
-            try {
-                // Monta o histórico de chat para a requisição da API Gemini
-                let chatHistory = [];
-                chatHistory.push({ role: "user", parts: [{ text: `Escreva uma mensagem de amor romântica e personalizada de Thiago para Nathalia, focando nos seguintes detalhes: ${userInput}. Seja carinhoso(a) e sincero(a).` }] });
-
-                const payload = { contents: chatHistory };
-                const apiKey = ""; // A chave da API será fornecida pelo ambiente Canvas em tempo de execução
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const result = await response.json();
-
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const text = result.candidates[0].content.parts[0].text;
-                    generatedLoveNote.textContent = text;
-                    generatedLoveNote.classList.remove('hidden');
-                } else {
-                    generatedLoveNote.textContent = 'Desculpe, não foi possível gerar a mensagem. Tente novamente.';
-                    generatedLoveNote.classList.remove('hidden');
-                    console.error('Estrutura de resposta inesperada da API Gemini:', result);
-                }
-
-            } catch (error) {
-                generatedLoveNote.textContent = 'Ocorreu um erro ao gerar a mensagem. Verifique sua conexão ou tente mais tarde.';
-                generatedLoveNote.classList.remove('hidden');
-                console.error('Erro ao chamar a API Gemini:', error);
-            } finally {
-                loadingSpinner.classList.add('hidden');
-            }
+        // Inicializa o carrossel, contador e corações ao carregar a página
+        window.onload = () => {
+            createPaginationDots(); // Cria os pontos na inicialização
+            updateCarousel(); // Garante que o carrossel e os pontos estejam na posição correta
+            updateCountdown(); // Função do contador de tempo, já existente
+            setInterval(updateCountdown, 1000); // Já existente
+            setInterval(createHeart, 500); // Cria um novo coração a cada 0.5 segundos
+        };
+        window.addEventListener('resize', () => {
+            updateCarousel();
         });
-
     </script>
 </body>
 </html>
