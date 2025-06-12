@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surpresa, Meu Amor!</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Fontes românticas e legíveis -->
+    <!-- Importando as fontes Dancing Script (para títulos), Lora (para corpo de texto), Inter (padrão) e Merriweather (para "hun?") -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Lora:wght@400;700&family=Inter:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome para os ícones (apenas se ainda precisar de outros ícones na página, para o carrossel não será mais usado) -->
+    <!-- Font Awesome para os ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -35,7 +35,7 @@
 
         .heading {
             color: #FF0000; /* Vermelho puro */
-            font-size: 5rem;
+            font-size: 4rem;
             font-weight: 700;
             text-align: center;
             margin-bottom: 10px; /* Diminuído o espaço após o título */
@@ -45,7 +45,7 @@
 
         .initials-text {
             color: #FF0000; /* Vermelho puro */
-            font-size: 3.3rem;
+            font-size: 2.2rem;
             font-weight: 700;
             text-align: center;
             margin-bottom: 10px; /* Diminuído o espaço após as iniciais */
@@ -206,11 +206,17 @@
         .player-controls .play-button {
             font-size: 3.5rem; /* Botão de play maior */
             color: #fff; /* Branco para o botão de play */
+            transition: color 0.2s ease; /* Mantém apenas a transição de cor */
         }
 
         .player-controls .play-button:hover {
             color: #1DB954; /* Verde do Spotify no hover */
         }
+
+        .player-controls .play-button:active {
+            /* Sem transform ou box-shadow para o estado active, como o original */
+        }
+
 
         /* Botão de verificação */
         .verified-icon {
@@ -330,7 +336,7 @@
             font-family: 'Dancing Script', cursive; /* Aplicando a fonte "Dancing Script" para o texto final */
         }
 
-        .signature-text { /* Novo estilo para a assinatura */
+        .signature-text {
             color: #FFFFFF; /* Branco */
             font-size: 1.2rem;
             text-align: center;
@@ -347,62 +353,61 @@
             overflow: hidden; /* Garante que as imagens que saem do slide fiquem escondidas */
             border-radius: 15px; /* Mais arredondado */
             box-shadow: 0 10px 30px rgba(0,0,0,0.7); /* Sombra mais forte */
-            padding-bottom: 75%; /* PROPORÇÃO: 4:3 (altura / largura) para otimizar encaixe */
-            height: 0; /* Reseta a altura para usar padding-bottom para a proporção */
+            height: 450px; /* Aumentado a altura para telas maiores */
             background-color: #1A1A1A; /* Fundo escuro para slides vazios */
         }
 
         .carousel-track {
             display: flex;
-            position: absolute; /* Permite que o track ocupe 100% do container com padding-bottom */
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            transition: transform 0.5s ease-in-out; /* Suavidade na transição do carrossel */
+            transition: transform 0.5s ease-in-out;
         }
 
         .carousel-slide {
-            min-width: 100%; /* Cada slide ocupa 100% da largura do carrossel */
+            min-width: 100%;
             height: 100%;
             box-sizing: border-box;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* Esconde qualquer parte da imagem que exceda o slide */
+            overflow: hidden;
         }
 
         .carousel-slide img {
             width: 100%;
-            height: 100%;
-            object-fit: cover; /* Garante que a imagem preencha o slide sem distorcer, cortando se necessário */
-            border-radius: 10px; /* Arredondamento nas bordas da imagem */
+            height: 100%; /* Definido 100% para ocupar toda a altura disponível */
+            object-fit: cover; /* Permite que a imagem preencha a altura, cortando a largura se necessário */
+            border-radius: 10px;
         }
 
         /* Estilos para os indicadores (círculos) MOVIDOS PARA FORA DO CONTAINER DO CARROSSEL */
         .carousel-pagination {
             display: flex;
-            justify-content: center; /* Centraliza os pontos */
-            gap: 10px; /* Espaçamento entre os círculos */
-            margin-top: 20px; /* Espaço entre o carrossel e os pontos */
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
         }
 
         .pagination-dot {
             width: 12px;
             height: 12px;
-            background-color: rgba(255, 255, 255, 0.4); /* Cor padrão dos círculos (cinza transparente) */
+            background-color: rgba(255, 255, 255, 0.4);
             border-radius: 50%;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         .pagination-dot.active {
-            background-color: #FF0000; /* Vermelho vibrante para o círculo ativo */
-            transform: scale(1.2); /* Aumenta um pouco o círculo ativo */
+            background-color: #FF0000;
+            transform: scale(1.2);
         }
 
         .pagination-dot:hover {
-            background-color: rgba(255, 255, 255, 0.7); /* Mais claro no hover */
+            background-color: rgba(255, 255, 255, 0.7);
         }
 
 
@@ -419,18 +424,18 @@
             height: 100%;
             top: 0;
             left: 0;
-            pointer-events: none; /* Garante que os corações não atrapalhem cliques */
-            overflow: hidden; /* Para que os corações desapareçam ao sair da tela */
-            z-index: 0; /* Ajustado para estar atrás do conteúdo principal (main-content tem z-index: 10) */
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
         }
 
         .heart {
             position: absolute;
-            background-color: #FF1493; /* Rosa choque */
+            background-color: #FF1493;
             transform: rotate(-45deg);
             animation: floatHeart 10s infinite ease-in-out;
-            opacity: 0; /* Começa invisível */
-            z-index: 0; /* Ajustado para estar atrás */
+            opacity: 0;
+            z-index: 0;
         }
 
         .heart::before,
@@ -480,7 +485,7 @@
             }
             .spotify-player-container {
                 padding: 15px;
-                width: 100%; /* Garante que ocupe a largura total disponível */
+                width: 100%;
             }
             .countdown-timer {
                 max-width: 90%;
@@ -524,10 +529,9 @@
             .signature-text {
                 font-size: 1rem;
             }
-            /* REMOVED .love-note-generator media queries */
             .carousel-container {
-                max-width: 90%; /* Ajusta para 90% da largura em telas médias */
-                padding-bottom: 75%; /* PROPORÇÃO: 4:3 para tablets e celulares maiores */
+                max-width: 90%;
+                height: 400px; /* Altura ajustada para tablets */
             }
             .carousel-slide {
                 height: 100%;
@@ -584,10 +588,9 @@
             .signature-text {
                 font-size: 0.9rem;
             }
-            /* REMOVED .love-note-generator media queries */
             .carousel-container {
                 max-width: 100%;
-                padding-bottom: 85%; /* PROPORÇÃO: um pouco mais "quadrado" para celulares menores */
+                height: 350px; /* Altura ajustada para celulares */
             }
             .carousel-slide {
                 height: 100%;
@@ -683,9 +686,11 @@
             <div class="carousel-track" id="carouselTrack">
                 <!-- Imagens do carrossel atualizadas com os links fornecidos -->
                 <div class="carousel-slide"><img src="https://i.imgur.com/9DkG1C6.jpeg" alt="Foto Carrossel 1"></div>
-                <div class="carousel-slide"><img src="https://i.imgur.com/MaRB5Lk.jpeg" alt="Foto Carrossel 2"></div>
-                <div class="carousel-slide"><img src="https://i.imgur.com/4GC1E2o.jpeg" alt="Foto Carrossel 3"></div>
-                <div class="carousel-slide"><img src="https://i.imgur.com/51wYhKc.jpeg" alt="Foto Carrossel 4"></div>
+                <!-- Novo slide adicionado em segundo lugar -->
+                <div class="carousel-slide"><img src="https://i.imgur.com/OiIU4Rl_d.webp?maxwidth=1520&fidelity=grand" alt="Foto Carrossel 2"></div>
+                <div class="carousel-slide"><img src="https://i.imgur.com/MaRB5Lk.jpeg" alt="Foto Carrossel 3"></div>
+                <div class="carousel-slide"><img src="https://i.imgur.com/4UqhrjR_d.webp?maxwidth=1520&fidelity=grand" alt="Foto Carrossel 4"></div>
+                <div class="carousel-slide"><img src="https://i.imgur.com/51wYhKc.jpeg" alt="Foto Carrossel 5"></div>
             </div>
         </div>
         <!-- Indicadores de paginação (círculos) -->
@@ -886,6 +891,16 @@
             updateCountdown(); // Função do contador de tempo, já existente
             setInterval(updateCountdown, 1000); // Já existente
             setInterval(createHeart, 1000); // Cria um novo coração a cada 1 segundo (anteriormente 0.5 segundos)
+
+            // Torna o botão de play funcional
+            const playButton = document.querySelector('.play-button');
+            const spotifyLink = "https://open.spotify.com/track/6PGoSes0D9eUDeeAafB2As?si=Kle3xcKSRbGOU_1wv2Hwxw";
+
+            if (playButton) {
+                playButton.addEventListener('click', () => {
+                    window.open(spotifyLink, '_blank'); // Abre o link em uma nova aba
+                });
+            }
         };
         window.addEventListener('resize', () => {
             updateCarousel();
