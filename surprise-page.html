@@ -35,7 +35,7 @@
 
         .heading {
             color: #FF0000; /* Vermelho puro */
-            font-size: 4rem;
+            font-size: 5rem;
             font-weight: 700;
             text-align: center;
             margin-bottom: 10px; /* Diminuído o espaço após o título */
@@ -45,7 +45,7 @@
 
         .initials-text {
             color: #FF0000; /* Vermelho puro */
-            font-size: 2.2rem;
+            font-size: 3.3rem;
             font-weight: 700;
             text-align: center;
             margin-bottom: 10px; /* Diminuído o espaço após as iniciais */
@@ -338,26 +338,6 @@
             font-family: 'Dancing Script', cursive; /* Mesma fonte da mensagem de amor */
         }
 
-        /* Estilos para a nova seção de geração de mensagens de amor */
-        /* REMOVED .love-note-generator { ... } */
-
-        /* REMOVED .love-note-generator h3 { ... } */
-
-        /* REMOVED .love-note-generator textarea { ... } */
-
-        /* REMOVED .love-note-generator textarea:focus { ... } */
-
-        /* REMOVED .love-note-generator button { ... } */
-
-        /* REMOVED .love-note-generator button:hover { ... } */
-
-        /* REMOVED .love-note-generator #loadingSpinner { ... } */
-
-        /* REMOVED .love-note-generator #loadingSpinner::before { ... } */
-
-        /* REMOVED .love-note-generator #generatedLoveNote { ... } */
-
-
         /* Estilos do Carrossel MODERNIZADO */
         .carousel-container {
             width: 100%;
@@ -367,7 +347,7 @@
             overflow: hidden; /* Garante que as imagens que saem do slide fiquem escondidas */
             border-radius: 15px; /* Mais arredondado */
             box-shadow: 0 10px 30px rgba(0,0,0,0.7); /* Sombra mais forte */
-            padding-bottom: 66.66%; /* PROPORÇÃO: 3:2 (altura / largura) para torná-lo mais "fino" */
+            padding-bottom: 75%; /* PROPORÇÃO: 4:3 (altura / largura) para otimizar encaixe */
             height: 0; /* Reseta a altura para usar padding-bottom para a proporção */
             background-color: #1A1A1A; /* Fundo escuro para slides vazios */
         }
@@ -441,7 +421,7 @@
             left: 0;
             pointer-events: none; /* Garante que os corações não atrapalhem cliques */
             overflow: hidden; /* Para que os corações desapareçam ao sair da tela */
-            z-index: 1; /* Garante que esteja no fundo */
+            z-index: 0; /* Ajustado para estar atrás do conteúdo principal (main-content tem z-index: 10) */
         }
 
         .heart {
@@ -450,7 +430,7 @@
             transform: rotate(-45deg);
             animation: floatHeart 10s infinite ease-in-out;
             opacity: 0; /* Começa invisível */
-            z-index: 1;
+            z-index: 0; /* Ajustado para estar atrás */
         }
 
         .heart::before,
@@ -905,7 +885,7 @@
             updateCarousel(); // Garante que o carrossel e os pontos estejam na posição correta
             updateCountdown(); // Função do contador de tempo, já existente
             setInterval(updateCountdown, 1000); // Já existente
-            setInterval(createHeart, 500); // Cria um novo coração a cada 0.5 segundos
+            setInterval(createHeart, 1000); // Cria um novo coração a cada 1 segundo (anteriormente 0.5 segundos)
         };
         window.addEventListener('resize', () => {
             updateCarousel();
